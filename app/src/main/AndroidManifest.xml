@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="2"
-    android:versionName="1.1"
+    android:versionCode="3"
+    android:versionName="1.2"
     android:compileSdkVersion="35"
     android:compileSdkVersionCodename="15"
     package="com.freechat.app"
@@ -15,6 +15,7 @@
         android:theme="@android:style/Theme.Material"
         android:label="FreeChat"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="false"
         android:supportsRtl="true">
         <activity
