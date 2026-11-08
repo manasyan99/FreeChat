@@ -123,18 +123,19 @@ def main():
         unaligned_apk, aligned_apk
     ], "Aligning APK")
 
-    # 7. Keystore
-    keystore = os.path.join(build_dir, "debug.keystore")
-    keytool = find_keytool()
-    run([
-        keytool, "-genkeypair", "-v",
-        "-keystore", keystore,
-        "-alias", "androiddebugkey",
-        "-keyalg", "RSA", "-keysize", "2048",
-        "-validity", "10000",
-        "-storepass", "android", "-keypass", "android",
-        "-dname", "CN=Android Debug,O=Android,C=US"
-    ], "Generating debug keystore")
+    # 7. Keystore (Persistent release keystore to allow seamless app updates without signature conflicts)
+    keystore = os.path.join(root, "freechat.keystore")
+    if not os.path.exists(keystore):
+        keytool = find_keytool()
+        run([
+            keytool, "-genkeypair", "-v",
+            "-keystore", keystore,
+            "-alias", "freechatkey",
+            "-keyalg", "RSA", "-keysize", "2048",
+            "-validity", "10000",
+            "-storepass", "freechatpass", "-keypass", "freechatpass",
+            "-dname", "CN=FreeChat,O=OpenRouter,C=US"
+        ], "Generating persistent release keystore")
 
     # 8. Sign APK
     final_apk = os.path.join(root, "FreeChat.apk")
@@ -145,9 +146,9 @@ def main():
     run([
         APKSIGNER, "sign",
         "--ks", keystore,
-        "--ks-pass", "pass:android",
-        "--ks-key-alias", "androiddebugkey",
-        "--key-pass", "pass:android",
+        "--ks-pass", "pass:freechatpass",
+        "--ks-key-alias", "freechatkey",
+        "--key-pass", "pass:freechatpass",
         final_apk
     ], "Signing APK")
 
