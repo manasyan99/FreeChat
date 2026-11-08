@@ -1,0 +1,9 @@
+# Build and temporary artifacts
+build/
+bin/
+*.class
+*.keystore
+*.idsig
+.idea/
+.gradle/
+.system_generated/
